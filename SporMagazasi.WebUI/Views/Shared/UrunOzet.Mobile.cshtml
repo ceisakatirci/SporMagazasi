@@ -1,0 +1,23 @@
+﻿@model SporMagazasi.Domain.Entities.Urun
+<div data-role="collapsible" data-collapsed="false" data-content-theme="c">
+    <h2>
+        @Model.Ad
+    </h2>
+    <div class="ui-grid-b">
+        <div class="ui-block-a">
+            @Model.Aciklama
+        </div>
+        <div class="ui-block-b">
+            <strong>(@Model.Fiyat.ToString("c"))</strong>
+        </div>
+        <div class="ui-block-c">
+            @using (Html.BeginForm("SepeteEkle", "Sepet"))
+            {
+                @Html.HiddenFor(x => x.UrunId)
+                @Html.Hidden("oncekiUrl", Request.Url.PathAndQuery)
+                <input type="submit" data-inline="true"
+                       data-mini="true" value="Sepete Ekle" />
+            }
+        </div>
+    </div>
+</div>

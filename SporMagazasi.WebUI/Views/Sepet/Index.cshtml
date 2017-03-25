@@ -1,0 +1,56 @@
+﻿@model SporMagazasi.WebUI.Models.SepetIndexViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+<style>
+    #sepetTablosu td {
+        vertical-align:middle
+    }
+</style>
+<h2>Sepetiniz</h2>
+
+<table id="sepetTablosu" class="table">
+    <thead>
+        <tr>
+            <th>Miktar</th>
+            <th>Ürün</th>
+            <th class="text-right">Fiyat</th>
+            <th class="text-right">Ara Toplam</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var sepetUrun in Model.Sepet.SepetUrunler)
+        {
+            <tr>
+                <td class="text-center">@sepetUrun.Adet</td>
+                <td class="text-left">@sepetUrun.Urun.Ad</td>
+                <td class="text-right">@sepetUrun.Urun.Fiyat.ToString("c")</td>
+                <td class="text-right">
+                    @((sepetUrun.Urun.Fiyat * sepetUrun.Adet).ToString("c"))
+                </td>
+                <td>
+                    @using (Html.BeginForm("SepetetenCikar","Sepet"))
+                    {
+                        @Html.Hidden("UrunId",sepetUrun.Urun.UrunId);
+                        @Html.HiddenFor(x=>x.OncekiUrl);
+                        <input type="submit" class="btn btn-sm btn-warning" value="Çıkar"/>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr class="lead">
+            <td colspan="3" class="text-right">Toplam:</td>
+            <td class="text-right">
+                @Model.Sepet.ToplamTutariHesapla().ToString("c")
+            </td>
+        </tr>
+    </tfoot>
+</table>
+
+<div class="text-center pull-right">
+    <a class="btn btn-primary" href="@Model.OncekiUrl">Alışverişe Devam</a>
+    @Html.ActionLink("Alışverişi Tamamla", "AlisverisiTamamla", null, new { @class = "btn btn-primary" })
+</div>

@@ -1,0 +1,77 @@
+﻿@model SporMagazasi.Domain.Entities.Urun
+@{
+    ViewBag.Title = "Guncelle";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="panel">
+    <div class="panel-heading">
+        <h3>Edit @Model.Ad</h3>
+    </div>
+    @using (Html.BeginForm("Guncelle", "Admin",
+        FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div class="panel-body">
+            @Html.HiddenFor(m => m.UrunId)
+            @foreach (var property in ViewData.ModelMetadata.Properties)
+            {
+                switch (property.PropertyName)
+                {
+                    case "UrunId":
+                        break;
+                    case "GoruntuData":
+                        break;
+                    case "GoruntuMimeType":
+                        break;
+                    default:
+                        <div class="form-group">
+                            <label>@(property.DisplayName ?? property.PropertyName)</label>
+                            @if (property.PropertyName == "Aciklama")
+                            {
+                                @Html.TextArea(property.PropertyName, null,
+                                    new { @class = "form-control", rows = 5 })
+                            }
+                            else
+                            {
+                                @Html.TextBox(property.PropertyName, null,
+                                    new { @class = "form-control" })
+                            }
+                        </div>
+                        @Html.ValidationMessage(property.DisplayName ?? property.PropertyName)
+                            break;
+                }
+            }
+            <div class="form-group">
+                <div style="position:relative;">
+                    <label>Görüntü</label>
+                    <a class="btn" href="javascript: void(0);">
+                        Görüntü Dosyanızı Seçin...
+                        <input type="file" name="Goruntu" size="40"
+                               style="position:absolute;z-index:2;top:0;
+                                left:0;filter:alpha(opacity=0);opacity:0;
+                                background-color:transparent;color:transparent"
+                               onchange='$("#upload-file-info").html($(this).val());' />
+                    </a>
+                    <span class='label label-info' id="upload-file-info"></span>
+                </div>
+                @if (Model.GoruntuData == null)
+                {
+                    <div class="form-control-static">No Image</div>
+                }
+                else
+                {
+                    <img class="img-thumbnail" width="150" height="150"
+                         src="@Url.Action("GoruntuGetir", "Urun", new { Model.UrunId })" />
+                }
+            </div>
+        </div>
+
+        <div class="panel-footer">
+            <input type="submit" value="Kaydet" class="btn btn-primary" />
+            @Html.ActionLink("İptal", "Index", null, new
+                {
+                    @class = "btn btn-default"
+                })
+        </div>
+    }
+</div>
+

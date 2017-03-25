@@ -1,0 +1,24 @@
+﻿@model SporMagazasi.Domain.Entities.Urun
+
+<div class="well">
+    @if (Model.GoruntuData != null)
+    {
+        <div class="pull-left" style="margin-right: 10px">
+            <img class="img-thumbnail" width="75" height="75"
+                 src="@Url.Action("GoruntuGetir", "Urun", new { Model.UrunId })" />
+        </div>
+    }
+    <h3>
+        <strong>@Model.Ad</strong>
+        <span class="pull-right label label-primary">@Model.Fiyat.ToString("c")</span>
+    </h3>
+    @using (Html.BeginForm("SepeteEkle", "Sepet"))
+    {
+        <div class="pull-right">
+            @Html.HiddenFor(x => x.UrunId)
+            @Html.Hidden("oncekiUrl", Request.Url.PathAndQuery)
+            <input type="submit" class="btn btn-success" value="Sepete Ekle" />
+        </div>
+    }
+    <span class="lead"> @Model.Aciklama</span>
+</div>

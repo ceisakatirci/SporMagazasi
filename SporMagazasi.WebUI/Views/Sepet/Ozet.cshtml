@@ -1,0 +1,41 @@
+﻿@model SporMagazasi.Domain.Entities.Sepet
+<style>
+    .odemeYap {
+        margin-right:20px;
+
+
+    }
+    .navbarOzel {
+        padding-right:10px
+    }
+    @{
+        var oncekiUrl = "";
+        if (!String.IsNullOrEmpty(Request["oncekiUrl"]))
+	    {
+            oncekiUrl = Request["oncekiUrl"];
+	    }
+        else
+	    {
+            oncekiUrl = Request.Url.PathAndQuery;
+	    }
+    }
+</style>
+<div class="navbar-right hidden-xs">
+    @* Hatırladın mı? Sadece değişkenin adını anonim içine yazarsak yetiyor! *@
+    @Html.ActionLink("Sepete Git", "Index", "Sepet",
+            new { oncekiUrl },
+                new { @class = "btn btn-default btn-sm odemeYap navbar-btn" })
+</div>
+
+<div class="navbar-right visible-xs">
+    <a href=@Url.Action("Index", "Sepet", new { returnUrl = Request.Url.PathAndQuery })
+       class="btn btn-default navbar-btn">
+        <span class="glyphicon glyphicon-shopping-cart"></span>
+    </a>
+</div>
+
+<div class="navbar-text navbar-right navbarOzel">
+    <b class="hidden-xs">Sepetiniz:</b>
+    @Model.SepetUrunler.Sum(u => u.Adet) kalem(ler),
+    @Model.ToplamTutariHesapla().ToString("c")
+</div>

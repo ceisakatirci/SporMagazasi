@@ -1,0 +1,28 @@
+﻿@model SporMagazasi.WebUI.Models.GirisViewModel
+@{
+    ViewBag.Title = "Yönetici: Giriş";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    HtmlHelper.ClientValidationEnabled = false;
+    HtmlHelper.UnobtrusiveJavaScriptEnabled = false;
+}
+<div class="panel">
+    <div class="panel-heading">
+        <h3>Giriş</h3>
+    </div>
+    <div class="panel-body">
+        <p class="lead">Yönetim sayfalarına erişmek için lütfen giriş yapın:</p>
+        @using (Html.BeginForm())
+        {
+            @Html.ValidationSummary()
+            <div class="form-group">
+                <label>Kullanıcı Adı:</label>
+                @Html.TextBoxFor(m => m.KullaniciAdi, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label>Şifre:</label>
+                @Html.PasswordFor(m => m.Sifre, new { @class = "form-control" })
+            </div>
+            <input type="submit" value="Giriş" class="btn btn-primary" />
+        }
+    </div>
+</div>

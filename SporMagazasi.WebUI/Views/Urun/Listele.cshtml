@@ -1,0 +1,23 @@
+﻿@using SporMagazasi.Domain.Entities
+@model SporMagazasi.WebUI.Models.UrunListesiViewModel
+
+@{
+    ViewBag.Title = "Urunler";
+    AjaxOptions ajaxOptions = new AjaxOptions {
+    
+        UpdateTargetId=""
+    };
+}
+
+
+@foreach (var u in Model.Urunler)
+{
+    @Html.Partial("UrunOzet",u);
+}
+
+<div class="btn-group pull-right">
+    @Html.SayfaLinkleri(
+    Model.SayfalamaBilgisi,
+    x => Url.Action("Listele", new { sayfa = x, kategori=Model.SimdikiKategori }))
+</div>
+

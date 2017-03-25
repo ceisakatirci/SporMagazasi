@@ -1,0 +1,50 @@
+﻿@model SporMagazasi.Domain.Entities.TeslimatDetaylari
+
+@{
+    ViewBag.Title = "AlisverisiTamamla";
+}
+
+<h2>Alışverişi Tamamla</h2>
+<p>Lütfen bilgilerinizi giriniz, ve biz ürünlerinizi zaman kaybetmeden size gönderelim!</p>
+@Html.ValidationSummary(false, "", new { @class = "text-danger" })
+@using (Html.BeginForm())
+{
+    <h3>Alıcı</h3>
+    <div class="form-group">
+        <label>Ad</label>
+        @Html.TextBoxFor(x => x.Ad, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label>Soyad</label>
+        @Html.TextBoxFor(x => x.Soyad, new { @class = "form-control" })
+    </div>
+    <h3>Adress</h3>
+
+
+
+    foreach (var property in ViewData.ModelMetadata.Properties)
+    {
+        if (property.PropertyName != "Ad" &&
+            property.PropertyName != "Soyad" &&
+            property.PropertyName != "HediyePaketiMi")
+        {
+            <div class="form-group">
+                <label>@(property.DisplayName ?? property.PropertyName)</label>
+                @Html.TextBox(property.PropertyName, null, new { @class = "form-control" })
+            </div>
+        }
+    }
+    <h3>Seçenekler</h3>
+    <div class="checkbox">
+        <label>
+            @Html.EditorFor(x => x.HediyePaketiMi)
+            Hediye Paketi Yap
+        </label>
+    </div>
+    <div class="text-center">
+        <input class="btn btn-primary pull-left" type="submit" value="Siparişi Tamamla" />
+    </div>
+
+}
+
+
